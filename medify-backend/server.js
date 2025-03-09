@@ -1,10 +1,12 @@
 const express = require("express");
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const cors = require("cors");
 
 const connectDB = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
+const authMiddleware = require("./middleware/authMiddleware");
+const hospitalroutes = require("./routes/hospitalRoutes");
 
 dotenv.config();
 connectDB();
@@ -24,7 +26,9 @@ app.get("/health", (req, res) => {
   });
 });
 
-// app.use("/api/auth", authRoutes);
+app.use("/api/auth", authRoutes);
+app.use(authMiddleware);
+app.use("/api/hospitals", hospitalroutes);
 
 app.listen(process.env.PORT, () => {
   console.log(`Server running on port ${process.env.PORT}`);

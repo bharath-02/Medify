@@ -1,22 +1,25 @@
+import { useState, useContext } from "react";
+import { Link } from "react-router-dom";
+
 import {
   Box,
   Container,
   Button,
-  List,
-  ListItem,
   Stack,
   Typography,
   useMediaQuery,
   IconButton,
 } from "@mui/material";
-import { Link } from "react-router-dom";
-import logo from "../../assets/logo.png";
-import styles from "./NavBar.module.css";
-import { useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import MenuIcon from "@mui/icons-material/Menu";
 
+import AuthContext from "../../context/AuthContext";
+import logo from "../../assets/logo.png";
+import styles from "./NavBar.module.css";
+
 export default function NavBar() {
+  const { user, logout } = useContext(AuthContext);
+
   const isMobile = useMediaQuery("(max-width:900px)");
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -51,17 +54,24 @@ export default function NavBar() {
             pb={{ xs: 4, md: 1 }}
             px={{ xs: 4, md: 0 }}
           >
-            <Link>Find Doctors</Link>
-            <Link to="/search">Hospitals</Link>
-            <Link>Medicines</Link>
-            <Link>Surgeries</Link>
-            <Link>Software for Provider</Link>
-            <Link>Facilities</Link>
-            <Link to="/my-bookings">
-              <Button variant="contained" disableElevation>
-                My Bookings
-              </Button>
-            </Link>
+            {user ? (
+              <>
+                <Link to="/search">Hospitals</Link>
+                <Link to="/my-bookings">My Bookings</Link>
+                <Button variant="contained" onClick={logout} disableElevation>
+                  Logout
+                </Button>
+              </>
+            ) : (
+              <>
+                <Link to="/login">Login</Link>
+                <Link to="/register">
+                  <Button variant="contained" disableElevation>
+                    Sign Up
+                  </Button>
+                </Link>
+              </>
+            )}
 
             {isMobile && (
               <IconButton

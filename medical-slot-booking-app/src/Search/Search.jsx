@@ -1,14 +1,16 @@
-import { Container, Stack, Box, Typography } from "@mui/material";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import HospitalCard from "../components/HospitalCard/HospitalCard";
+
+import { Container, Stack, Box, Typography } from "@mui/material";
+
 import icon from "../assets/tick.png";
 import cta from "../assets/cta.png";
+import HospitalCard from "../components/HospitalCard/HospitalCard";
 import SearchHospital from "../components/SearchHospital/SearchHospital";
 import BookingModal from "../components/BookingModal/BookingModal";
 import AutohideSnackbar from "../components/AutohideSnackbar/AutohideSnackbar";
 import NavBar from "../components/NavBar/NavBar";
+import API from "../config/api";
 
 export default function Search() {
   const [seachParams, setSearchParams] = useSearchParams();
@@ -25,16 +27,16 @@ export default function Search() {
   const [showBookingSuccess, setShowBookingSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  //API to fetch hospitals based on state and city selection 
+  //API to fetch hospitals based on state and city selection
   useEffect(() => {
     const getHospitals = async () => {
       setHospitals([]);
       setIsLoading(true);
       try {
-        const data = await axios.get(
-          `https://meddata-backend.onrender.com/data?state=${state}&city=${city}`
+        const response = await API.get(
+          `/hospitals/data?state=${state}&city=${city}`
         );
-        setHospitals(data.data);
+        setHospitals(response.data);
         setIsLoading(false);
       } catch (err) {
         console.log(err);

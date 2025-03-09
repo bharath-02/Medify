@@ -34,7 +34,7 @@ export default function Home() {
             spacing={10}
             boxShadow="0 0 12px rgba(0,0,0,0.1)"
           >
-            <SearchHospital />
+            {/* <SearchHospital /> */}
             <HeroServices />
           </Stack>
         </Container>

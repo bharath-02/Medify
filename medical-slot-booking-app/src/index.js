@@ -1,12 +1,17 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
-import App from "./App";
-import Search from "./Search/Search";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Home from "./Home/Home";
+
 import { createTheme, ThemeProvider } from "@mui/material";
+
+import App from "./App";
+import { AuthProvider } from "./context/AuthContext";
+import Home from "./Home/Home";
 import MyBookings from "./MyBookings/MyBookings";
+import Search from "./Search/Search";
+import Login from "./Login/Login";
+import Register from "./Register/Register";
+import "./index.css";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +25,14 @@ const router = createBrowserRouter([
       {
         path: "my-bookings",
         element: <MyBookings />,
+      },
+      {
+        path: "login",
+        element: <Login />,
+      },
+      {
+        path: "register",
+        element: <Register />,
       },
       {
         path: "/",
@@ -140,7 +153,9 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
-      <RouterProvider router={router} />
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
     </ThemeProvider>
   </React.StrictMode>
 );

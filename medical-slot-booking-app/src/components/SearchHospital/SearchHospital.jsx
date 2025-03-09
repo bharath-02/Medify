@@ -1,8 +1,10 @@
-import { MenuItem, Select, Button, InputAdornment, Box } from "@mui/material";
 import { useEffect, useState } from "react";
-import SearchIcon from "@mui/icons-material/Search";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+
+import { MenuItem, Select, Button, InputAdornment, Box } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
+
+import API from "../../config/api";
 
 //Component to search the hospitals based on State and City selection.
 //API used to fetch details of hospital and set the values in formData
@@ -15,9 +17,7 @@ export default function SearchHospital() {
   useEffect(() => {
     const fetchStates = async () => {
       try {
-        const response = await axios.get(
-          "https://meddata-backend.onrender.com/states"
-        );
+        const response = await API.get("/hospitals/states");
         setStates(response.data);
       } catch (error) {
         console.error("Error fetching states:", error);
@@ -32,11 +32,8 @@ export default function SearchHospital() {
       setCities([]);
       setFormData((prev) => ({ ...prev, city: "" }));
       try {
-        const data = await axios.get(
-          `https://meddata-backend.onrender.com/cities/${formData.state}`
-        );
-        setCities(data.data);
-        // console.log("city", data.data);
+        const response = await API.get(`/hospitals/cities/${formData.state}`);
+        setCities(response.data);
       } catch (error) {
         console.log("Error in fetching city:", error);
       }

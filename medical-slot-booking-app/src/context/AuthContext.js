@@ -24,11 +24,12 @@ export const AuthProvider = ({ children }) => {
     setToken(authToken);
   };
 
-  const logout = () => {
+  const logout = (navigate) => {
     localStorage.removeItem("user");
     localStorage.removeItem("token");
     setUser(null);
     setToken(null);
+    navigate("/");
   };
 
   return (

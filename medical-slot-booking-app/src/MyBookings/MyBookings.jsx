@@ -1,17 +1,27 @@
-import { Box, Typography, Container, Stack } from "@mui/material";
-import HospitalCard from "../components/HospitalCard/HospitalCard";
 import { useEffect, useState } from "react";
+
+import { Box, Typography, Container, Stack } from "@mui/material";
+
 import cta from "../assets/cta.png";
+import HospitalCard from "../components/HospitalCard/HospitalCard";
 import SearchBar from "../components/SearchBar/SearchBar";
 import NavBar from "../components/NavBar/NavBar";
+import API from "../config/api";
 
 export default function MyBookings() {
   const [bookings, setBookings] = useState([]);
   const [filteredBookings, setFilteredBookings] = useState([]);
 
   useEffect(() => {
-    const localBookings = localStorage.getItem("bookings") || "[]";
-    setBookings(JSON.parse(localBookings));
+    const fetchBookings = async () => {
+      try {
+        const response = await API.get("/bookings");
+        setBookings(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchBookings();
   }, []);
 
   useEffect(() => {
@@ -74,7 +84,6 @@ export default function MyBookings() {
               width={{ xs: 1, md: "calc(100% - 384px)" }}
               mr="24px"
             >
-                
               {filteredBookings.length > 0 &&
                 filteredBookings.map((hospital) => (
                   <HospitalCard

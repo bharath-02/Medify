@@ -1,3 +1,7 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { format } from "date-fns";
+
 import {
   Modal,
   Typography,
@@ -6,8 +10,8 @@ import {
   Button,
   Stack,
 } from "@mui/material";
-import { useState } from "react";
-import { format } from "date-fns";
+
+import API from "../../config/api";
 
 export default function BookingModal({
   setOpen,
@@ -15,26 +19,23 @@ export default function BookingModal({
   bookingDetails,
   showSuccessMessage,
 }) {
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
 
-  const handleBooking = (e) => {
+  const handleBooking = async (e) => {
     e.preventDefault();
     triggerEvent();
 
-    const bookings = localStorage.getItem("bookings") || "[]";
-
-    const oldBookings = JSON.parse(bookings);
-
-    localStorage.setItem(
-      "bookings",
-      JSON.stringify([
-        ...oldBookings,
-        { ...bookingDetails, bookingEmail: email },
-      ])
-    );
-    showSuccessMessage(true);
-    setEmail("");
-    setOpen(false);
+    try {
+      await API.post("/bookings", { ...bookingDetails, bookingEmail: email });
+      navigate("/my-bookings");
+      showSuccessMessage(true);
+      setEmail("");
+      setOpen(false);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const triggerEvent = () => {

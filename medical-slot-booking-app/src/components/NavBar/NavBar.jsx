@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import {
   Box,
@@ -18,6 +18,7 @@ import logo from "../../assets/logo.png";
 import styles from "./NavBar.module.css";
 
 export default function NavBar() {
+  const navigate = useNavigate();
   const { user, logout } = useContext(AuthContext);
 
   const isMobile = useMediaQuery("(max-width:900px)");
@@ -58,7 +59,7 @@ export default function NavBar() {
               <>
                 <Link to="/search">Hospitals</Link>
                 <Link to="/my-bookings">My Bookings</Link>
-                <Button variant="contained" onClick={logout} disableElevation>
+                <Button variant="contained" onClick={() => logout(navigate)} disableElevation>
                   Logout
                 </Button>
               </>

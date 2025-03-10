@@ -7,6 +7,7 @@ const connectDB = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
 const authMiddleware = require("./middleware/authMiddleware");
 const hospitalroutes = require("./routes/hospitalRoutes");
+const bookingRoutes = require("./routes/bookingRoutes");
 
 dotenv.config();
 connectDB();
@@ -29,6 +30,7 @@ app.get("/health", (req, res) => {
 app.use("/api/auth", authRoutes);
 app.use(authMiddleware);
 app.use("/api/hospitals", hospitalroutes);
+app.use("/api/bookings", bookingRoutes);
 
 app.listen(process.env.PORT, () => {
   console.log(`Server running on port ${process.env.PORT}`);

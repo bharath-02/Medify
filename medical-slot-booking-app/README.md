@@ -1,21 +1,20 @@
-# Getting Started with Create React App
+## 🛠️ Installation & Setup
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### **1️⃣ Clone the repository**
+```sh
+git clone https://github.com/bharath-02/Medify.git
+cd Medify
+cd medify-slot-booking-app
+npm install
+```
 
-## Available Scripts
+Create a .env file inside medify-frontend and add:
 
-In the project directory, you can run:
+```sh
+REACT_APP_API_URL=https://your-backend-url.onrender.com/api
+```
 
-### `npm install`
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-
-### `Live Site`
-
-https://medify-three-wine.vercel.app/
+Start the frontend:
+```sh
+npm start
+```
